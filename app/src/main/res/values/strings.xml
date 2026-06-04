@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HAESAL</string>
+    <string name="app_subtitle">햇살 · ALIEN CYBERPUNK SOLAR MONITOR</string>
+    <string name="battery_percentage">--%%</string>
+    <string name="charging">Charging</string>
+    <string name="discharging">Discharging</string>
+    <string name="solar_mode_active">☀ SOLAR MODE ACTIVE</string>
+    <string name="solar_mode_off">○ SOLAR MODE OFF</string>
+    <string name="charging_source">Source: --</string>
+    <string name="temperature">Temperature: --</string>
+    <string name="voltage">Voltage: --</string>
+    <string name="health">Health: --</string>
+    <string name="technology">Technology: --</string>
+    <string name="label_settings">Settings</string>
+    <string name="label_history">History</string>
+    <string name="label_refresh">Refresh</string>
+    <string name="settings_solar_mode">Solar Mode</string>
+    <string name="settings_solar_mode_desc">Simulate solar charging source</string>
+    <string name="settings_battery_history">Battery History</string>
+    <string name="settings_battery_history_desc">Record battery status events</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_notifications_desc">Battery alerts and charging updates</string>
+    <string name="history_title">Battery History</string>
+    <string name="no_history">No battery history recorded yet.</string>
+    <string name="clear_history">Clear History</string>
+    <string name="insights_title">REACTOR INSIGHTS</string>
+    <string name="reactor_core">REACTOR CORE</string>
+    <string name="solar_reactor">SOLAR REACTOR</string>
+    <string name="hud_panel">HUD PANEL</string>
+</resources>

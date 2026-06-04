@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".presentation.activity.MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="80dp">
+
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@color/surface">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HAESAL · 햇살"
+                    android:textColor="@color/primaryEnergy"
+                    android:textSize="22sp"
+                    android:fontFamily="monospace"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ALIEN CYBERPUNK SOLAR MONITOR"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="10sp"
+                    android:fontFamily="monospace"
+                    android:letterSpacing="0.15" />
+            </LinearLayout>
+
+            <!-- Scan-line overlay container -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Reactor Visualization -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingTop="24dp"
+                    android:paddingBottom="16dp">
+
+                    <!-- Reactor Core Container -->
+                    <FrameLayout
+                        android:layout_width="240dp"
+                        android:layout_height="240dp"
+                        android:layout_gravity="center">
+
+                        <!-- Outer rotating ring -->
+                        <ImageView
+                            android:id="@+id/ivReactorOuter"
+                            android:layout_width="220dp"
+                            android:layout_height="220dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/bg_reactor_outer" />
+
+                        <!-- Solar rays (rotating) -->
+                        <ImageView
+                            android:id="@+id/ivSolarRays"
+                            android:layout_width="200dp"
+                            android:layout_height="200dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_solar_rays" />
+
+                        <!-- Core glow -->
+                        <ImageView
+                            android:id="@+id/ivReactorCore"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/bg_reactor_core" />
+
+                        <!-- Battery percentage center -->
+                        <TextView
+                            android:id="@+id/tvBatteryPercentage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="--%%"
+                            android:textColor="@color/primaryEnergy"
+                            android:textSize="42sp"
+                            android:fontFamily="monospace"
+                            android:textStyle="bold"
+                            tools:text="87%" />
+
+                        <!-- Charging icon overlay -->
+                        <ImageView
+                            android:id="@+id/ivChargingIcon"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="bottom|center_horizontal"
+                            android:layout_marginBottom="18dp"
+                            android:src="@drawable/ic_battery_idle" />
+                    </FrameLayout>
+
+                    <!-- Charging state label -->
+                    <TextView
+                        android:id="@+id/tvChargingState"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Discharging"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="13sp"
+                        android:fontFamily="monospace"
+                        android:letterSpacing="0.1"
+                        tools:text="Charging" />
+
+                    <!-- Solar status label -->
+                    <TextView
+                        android:id="@+id/tvSolarStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="○ SOLAR MODE OFF"
+                        android:textColor="@color/primaryEnergy"
+                        android:textSize="11sp"
+                        android:fontFamily="monospace"
+                        android:letterSpacing="0.15"
+                        tools:text="☀ SOLAR MODE ACTIVE" />
+
+                </LinearLayout>
+
+                <!-- Scan line animation -->
+                <View
+                    android:id="@+id/viewScanLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@drawable/bg_scan_line" />
+
+            </FrameLayout>
+
+            <!-- Battery Level Progress Bar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ENERGY LEVEL"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="10sp"
+                    android:fontFamily="monospace"
+                    android:letterSpacing="0.15"
+                    android:layout_marginBottom="6dp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBatteryLevel"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="12dp"
+                    android:max="100"
+                    android:progress="50"
+                    android:progressDrawable="@drawable/bg_progress_battery" />
+            </LinearLayout>
+
+            <!-- HUD Info Panels Row 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="10dp">
+
+                <!-- Charging Source Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:background="@drawable/bg_card_cyberpunk"
+                    android:layout_marginEnd="6dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CHARGING SOURCE"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="9sp"
+                        android:fontFamily="monospace"
+                        android:letterSpacing="0.1" />
+
+                    <TextView
+                        android:id="@+id/tvChargingSource"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Source: --"
+                        android:textColor="@color/primaryEnergy"
+                        android:textSize="13sp"
+                        android:fontFamily="monospace"
+                        tools:text="Source: AC" />
+                </LinearLayout>
+
+                <!-- Temperature Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:background="@drawable/bg_card_cyberpunk"
+                    android:layout_marginStart="6dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TEMPERATURE"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="9sp"
+                        android:fontFamily="monospace"
+                        android:letterSpacing="0.1" />
+
+                    <TextView
+                        android:id="@+id/tvTemperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="--°C"
+                        android:textColor="@color/primaryEnergy"
+                        android:textSize="13sp"
+                        android:fontFamily="monospace"
+                        tools:text="28.5°C" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- HUD Info Panels Row 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="10dp">
+
+                <!-- Voltage Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:background="@drawable/bg_card_cyberpunk"
+                    android:layout_marginEnd="6dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="VOLTAGE"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="9sp"
+                        android:fontFamily="monospace"
+                        android:letterSpacing="0.1" />
+
+                    <TextView
+                        android:id="@+id/tvVoltage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="-- V"
+                        android:textColor="@color/primaryEnergy"
+                        android:textSize="13sp"
+                        android:fontFamily="monospace"
+                        tools:text="4.21 V" />
+                </LinearLayout>
+
+                <!-- Health Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:background="@drawable/bg_card_cyberpunk"
+                    android:layout_marginStart="6dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="HEALTH"
+                        android:textColor="@color/textSecondary"
+                        android:textSize="9sp"
+                        android:fontFamily="monospace"
+                        android:letterSpacing="0.1" />
+
+                    <TextView
+                        android:id="@+id/tvHealth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="--"
+                        android:textColor="@color/success"
+                        android:textSize="13sp"
+                        android:fontFamily="monospace"
+                        tools:text="Good" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- HUD Info Panel Row 3 - Technology -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="10dp"
+                android:padding="16dp"
+                android:background="@drawable/bg_card_cyberpunk"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="REACTOR CORE TECHNOLOGY"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="9sp"
+                    android:fontFamily="monospace"
+                    android:letterSpacing="0.1" />
+
+                <TextView
+                    android:id="@+id/tvTechnology"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="--"
+                    android:textColor="@color/primaryEnergy"
+                    android:textSize="13sp"
+                    android:fontFamily="monospace"
+                    tools:text="Li-ion" />
+            </LinearLayout>
+
+            <!-- Solar Reactor Card -->
+            <LinearLayout
+                android:id="@+id/cardSolarReactor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/bg_card_cyberpunk"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SOLAR REACTOR STATUS"
+                    android:textColor="@color/secondaryGlow"
+                    android:textSize="9sp"
+                    android:fontFamily="monospace"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HAESAL monitors solar charging state via\nsimulated reactor core analysis.\nEnable Solar Mode in Settings."
+                    android:textColor="@color/textSecondary"
+                    android:textSize="11sp"
+                    android:fontFamily="monospace"
+                    android:lineSpacingExtra="4dp" />
+            </LinearLayout>
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="16dp">
+
+                <Button
+                    android:id="@+id/btnHistory"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:text="⚡ HISTORY"
+                    android:textColor="@color/primaryEnergy"
+                    android:textSize="12sp"
+                    android:fontFamily="monospace"
+                    android:background="@drawable/bg_button_cyberpunk"
+                    android:stateListAnimator="@null" />
+
+                <Button
+                    android:id="@+id/btnSettings"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:text="⚙ SETTINGS"
+                    android:textColor="@color/primaryEnergy"
+                    android:textSize="12sp"
+                    android:fontFamily="monospace"
+                    android:background="@drawable/bg_button_cyberpunk"
+                    android:stateListAnimator="@null" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- FAB Refresh -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/ic_refresh"
+        app:backgroundTint="@color/primaryEnergy"
+        app:tint="@color/background"
+        app:fabSize="normal"
+        android:contentDescription="@string/label_refresh" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

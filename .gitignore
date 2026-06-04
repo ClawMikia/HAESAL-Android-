@@ -1,0 +1,78 @@
+# Built application files
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Files for the ART/Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+out/
+build/
+dist/
+*.iml
+.gradle/
+build/
+
+# CMake
+cmake/
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+*.cmake
+Makefile
+*.o
+*.a
+*.so
+
+# Local profile
+local.properties
+
+# Proguard folder
+proguard/
+
+# Log files
+*.log
+
+# Android Studio Navigation Editor files
+.navigation/
+
+# Android Studio captures folder
+captures/
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+*.hprof
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services (e.g. Google Maps API)
+google-services.json
+
+# Android emoji icons (for notifications)
+emoji_compat.xml
+
+# Firebase
+google-services.json
+firebase-crashlytics-*.txt
+*.crashlytics-plugin-build.json
+
+# Google Cloud Messaging
+gcm-config.xml
+
+# Google Maps API Key
+google_maps_api.xml
+
+# Android TV
+AndroidManifest.xml.backup

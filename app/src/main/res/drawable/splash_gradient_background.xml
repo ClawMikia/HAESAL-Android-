@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <gradient
+        android:angle="135"
+        android:centerColor="#33261100"
+        android:endColor="#99332200"
+        android:startColor="#FF5D4037"
+        android:type="linear" />
+
+    <item>
+        <bitmap
+            android:gravity="center|top"
+            android:src="@drawable/ic_solar_rays"
+            android:alpha="0.3" />
+    </item>
+
+</shape>

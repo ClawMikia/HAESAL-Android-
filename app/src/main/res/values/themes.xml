@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Base.Theme.Haesal" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary -->
+        <item name="colorPrimary">@color/primaryEnergy</item>
+        <item name="colorPrimaryVariant">@color/secondaryGlow</item>
+        <item name="colorOnPrimary">@color/background</item>
+        <!-- Secondary -->
+        <item name="colorSecondary">@color/secondaryGlow</item>
+        <item name="colorSecondaryVariant">@color/solarGlow</item>
+        <item name="colorOnSecondary">@color/background</item>
+        <!-- Background -->
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorOnBackground">@color/textPrimary</item>
+        <!-- Surface -->
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/textPrimary</item>
+        <!-- Error -->
+        <item name="colorError">@color/warning</item>
+        <item name="colorOnError">@color/textPrimary</item>
+        <!-- Window -->
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:navigationBarColor">@color/background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <!-- Text -->
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+        <!-- Action Bar -->
+        <item name="actionBarStyle">@style/HaesalActionBar</item>
+    </style>
+
+    <style name="Theme.Haesal" parent="Base.Theme.Haesal" />
+
+    <style name="HaesalActionBar" parent="Widget.AppCompat.ActionBar">
+        <item name="background">@color/surface</item>
+        <item name="titleTextStyle">@style/HaesalActionBarTitle</item>
+    </style>
+
+    <style name="HaesalActionBarTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/primaryEnergy</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+
+    <style name="HaesalCard" parent="">
+        <item name="android:background">@drawable/bg_card_cyberpunk</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="HaesalLabelText">
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:letterSpacing">0.1</item>
+    </style>
+
+    <style name="HaesalValueText">
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+
+    <style name="HaesalEnergyText">
+        <item name="android:textColor">@color/primaryEnergy</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+
+    <style name="Theme.Haesal.Splash" parent="Base.Theme.Haesal">
+        <item name="android:windowBackground">@drawable/splash_gradient_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>
