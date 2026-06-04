@@ -8,45 +8,47 @@
     android:background="@color/background"
     tools:context=".presentation.activity.MainActivity">
 
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/surface"
+        android:elevation="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HAESAL · 햇살"
+            android:textColor="@color/primaryEnergy"
+            android:textSize="22sp"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:letterSpacing="0.1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ALIEN CYBERPUNK SOLAR MONITOR"
+            android:textColor="@color/textSecondary"
+            android:textSize="10sp"
+            android:fontFamily="monospace"
+            android:letterSpacing="0.15" />
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:layout_marginTop="80dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="80dp">
-
-            <!-- Header -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:background="@color/surface">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="HAESAL · 햇살"
-                    android:textColor="@color/primaryEnergy"
-                    android:textSize="22sp"
-                    android:fontFamily="monospace"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ALIEN CYBERPUNK SOLAR MONITOR"
-                    android:textColor="@color/textSecondary"
-                    android:textSize="10sp"
-                    android:fontFamily="monospace"
-                    android:letterSpacing="0.15" />
-            </LinearLayout>
+            android:paddingBottom="70dp">
 
             <!-- Scan-line overlay container -->
             <FrameLayout
@@ -386,43 +388,19 @@
                     android:lineSpacingExtra="4dp" />
             </LinearLayout>
 
-            <!-- Action Buttons -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
-                android:paddingBottom="16dp">
-
-                <Button
-                    android:id="@+id/btnHistory"
-                    android:layout_width="0dp"
-                    android:layout_height="44dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:text="⚡ HISTORY"
-                    android:textColor="@color/primaryEnergy"
-                    android:textSize="12sp"
-                    android:fontFamily="monospace"
-                    android:background="@drawable/bg_button_cyberpunk"
-                    android:stateListAnimator="@null" />
-
-                <Button
-                    android:id="@+id/btnSettings"
-                    android:layout_width="0dp"
-                    android:layout_height="44dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="8dp"
-                    android:text="⚙ SETTINGS"
-                    android:textColor="@color/primaryEnergy"
-                    android:textSize="12sp"
-                    android:fontFamily="monospace"
-                    android:background="@drawable/bg_button_cyberpunk"
-                    android:stateListAnimator="@null" />
-            </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
+
+    <!-- Bottom Navigation View -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:menu="@menu/bottom_navigation_menu"
+        app:itemTextColor="@color/textSecondary"
+        app:itemIconTint="@color/primaryEnergy"
+        app:itemBackground="@color/surface" />
 
     <!-- FAB Refresh -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -430,7 +408,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="80dp"
         app:srcCompat="@drawable/ic_refresh"
         app:backgroundTint="@color/primaryEnergy"
         app:tint="@color/background"
