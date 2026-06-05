@@ -7,6 +7,10 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
 import android.os.Build
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.haesal.batterymonitor.HaesalApplication
@@ -21,11 +25,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class BatteryViewModel(application: Application) : AndroidViewModel(application) {
+class BatteryViewModel(application: Application) : AndroidViewModel(application), SensorEventListener {
 
     private val app = application as HaesalApplication
     private val repository = app.repository
     private val prefs = app.preferencesManager
+    private val sensorManager = application.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+    private val lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
 
     private val _batteryStatus = MutableStateFlow(BatteryStatus())
     val batteryStatus: StateFlow<BatteryStatus> = _batteryStatus.asStateFlow()
@@ -56,9 +62,9 @@ class BatteryViewModel(application: Application) : AndroidViewModel(application)
             val voltage = intent.getIntExtra(BatteryReceiver.EXTRA_VOLTAGE, 0)
             val source = try { ChargingSource.valueOf(sourceStr) } catch (e: Exception) { ChargingSource.UNKNOWN }
 
-            _batteryStatus.value = BatteryStatus(
+            _batteryStatus.value = _batteryStatus.value.copy(
                 level = level,
-                isCharging = isCharging,
+                isCharging = isCharging || (_batteryStatus.value.solarEfficiency > 0 && prefs.isSolarModeEnabled),
                 chargingSource = source,
                 health = health,
                 technology = tech,
@@ -73,7 +79,46 @@ class BatteryViewModel(application: Application) : AndroidViewModel(application)
         loadCurrentBatteryStatus()
         observeHistory()
         registerBatteryReceiver()
+        registerLightSensor()
     }
+
+    private fun registerLightSensor() {
+        lightSensor?.let {
+            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_UI)
+        }
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        if (event?.sensor?.type == Sensor.TYPE_LIGHT) {
+            val lux = event.values[0]
+            val efficiency = calculateEfficiency(lux)
+            
+            _batteryStatus.value = _batteryStatus.value.copy(
+                lux = lux,
+                solarEfficiency = if (prefs.isSolarModeEnabled) efficiency else 0,
+                isCharging = isSystemCharging() || (efficiency > 0 && prefs.isSolarModeEnabled)
+            )
+        }
+    }
+
+    private fun calculateEfficiency(lux: Float): Int {
+        return when {
+            lux < 10 -> 0
+            lux < 500 -> (lux / 500 * 15).toInt()
+            lux < 5000 -> 15 + ((lux - 500) / 4500 * 35).toInt()
+            lux < 20000 -> 50 + ((lux - 5000) / 15000 * 40).toInt()
+            else -> 90 + ((lux - 20000) / 10000 * 10).toInt().coerceAtMost(10)
+        }.coerceIn(0, 100)
+    }
+
+    private fun isSystemCharging(): Boolean {
+        val context = getApplication<Application>()
+        val intent = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        val status = intent?.getIntExtra(BatteryManager.EXTRA_STATUS, -1) ?: -1
+        return status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
 
     private fun registerBatteryReceiver() {
         val context = getApplication<Application>()
@@ -159,6 +204,7 @@ class BatteryViewModel(application: Application) : AndroidViewModel(application)
     override fun onCleared() {
         super.onCleared()
         try {
+            sensorManager.unregisterListener(this)
             getApplication<Application>().unregisterReceiver(batteryUpdateReceiver)
         } catch (e: Exception) {
             // Ignore if not registered

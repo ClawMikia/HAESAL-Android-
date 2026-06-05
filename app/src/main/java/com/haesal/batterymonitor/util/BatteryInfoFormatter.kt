@@ -31,4 +31,14 @@ object BatteryInfoFormatter {
         val sdf = java.text.SimpleDateFormat("MMM dd, HH:mm", java.util.Locale.getDefault())
         return sdf.format(java.util.Date(timestamp))
     }
+
+    fun getSolarAiInsight(lux: Float): String {
+        return when {
+            lux < 10 -> "REACTOR STALLED: Absolute darkness detected. Move to light source."
+            lux < 500 -> "LOW YIELD: Ambient light insufficient for reactor ignition."
+            lux < 5000 -> "STABLE: Gathering energy from local photons. Efficiency moderate."
+            lux < 20000 -> "OPTIMAL: Solar rays detected. Reactor core reaching peak state."
+            else -> "OVERLOAD: Direct solar impact! Energy absorption at maximum capacity."
+        }
+    }
 }

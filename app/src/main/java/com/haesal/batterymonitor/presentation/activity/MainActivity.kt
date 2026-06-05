@@ -123,6 +123,28 @@ class MainActivity : AppCompatActivity() {
 
         val solarText = if (status.isSolarMode) "☀ SOLAR MODE ACTIVE" else "○ SOLAR MODE OFF"
         binding.tvSolarStatus.text = solarText
+        
+        // Update Solar UI
+        if (status.isSolarMode) {
+            binding.tvSolarEfficiency.text = "Efficiency: ${status.solarEfficiency}%"
+            binding.tvSolarLux.text = "Light Intensity: ${status.lux.toInt()} Lux"
+            binding.tvSolarAiInsight.text = BatteryInfoFormatter.getSolarAiInsight(status.lux)
+            binding.tvSolarAiInsight.visibility = android.view.View.VISIBLE
+            
+            // Adjust animation speed based on efficiency
+            val duration = when {
+                status.solarEfficiency > 80 -> 1000L
+                status.solarEfficiency > 50 -> 2000L
+                status.solarEfficiency > 20 -> 4000L
+                else -> 8000L
+            }
+            binding.ivSolarRays.animation?.duration = duration
+        } else {
+            binding.tvSolarEfficiency.text = "Efficiency: 0%"
+            binding.tvSolarLux.text = "Solar Reactor Offline"
+            binding.tvSolarAiInsight.visibility = android.view.View.GONE
+            binding.ivSolarRays.animation?.duration = 10000L
+        }
 
         // Color battery percentage
         val percentColor = when {

@@ -8,9 +8,11 @@ data class BatteryStatus(
     val technology: String = "Unknown",
     val temperature: Float = 0f,
     val voltage: Int = 0,
-    val isSolarMode: Boolean = false
+    val isSolarMode: Boolean = false,
+    val lux: Float = 0f,
+    val solarEfficiency: Int = 0
 ) {
     val temperatureCelsius: Float get() = temperature / 10f
     val voltageVolts: Float get() = voltage / 1000f
-    val displayChargingSource: String get() = if (isSolarMode && isCharging) "Solar" else chargingSource.displayName
+    val displayChargingSource: String get() = if (isSolarMode && solarEfficiency > 0) "Solar Reactor" else chargingSource.displayName
 }

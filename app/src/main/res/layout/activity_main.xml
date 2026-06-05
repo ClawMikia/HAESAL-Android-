@@ -379,11 +379,44 @@
                     android:layout_marginBottom="8dp" />
 
                 <TextView
+                    android:id="@+id/tvSolarEfficiency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Efficiency: 0%"
+                    android:textColor="@color/primaryEnergy"
+                    android:textSize="14sp"
+                    android:fontFamily="monospace"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/tvSolarLux"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Light Intensity: 0 Lux"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="11sp"
+                    android:fontFamily="monospace"
+                    android:layout_marginBottom="12dp" />
+
+                <TextView
+                    android:id="@+id/tvSolarAiInsight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="AI ANALYZING..."
+                    android:textColor="@color/secondaryGlow"
+                    android:textSize="10sp"
+                    android:fontFamily="monospace"
+                    android:padding="8dp"
+                    android:background="@drawable/bg_insights_card"
+                    android:layout_marginBottom="12dp" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="HAESAL monitors solar charging state via\nsimulated reactor core analysis.\nEnable Solar Mode in Settings."
                     android:textColor="@color/textSecondary"
-                    android:textSize="11sp"
+                    android:textSize="10sp"
                     android:fontFamily="monospace"
                     android:lineSpacingExtra="4dp" />
             </LinearLayout>
