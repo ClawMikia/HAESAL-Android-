@@ -28,4 +28,9 @@
     <string name="reactor_core">REACTOR CORE</string>
     <string name="solar_reactor">SOLAR REACTOR</string>
     <string name="hud_panel">HUD PANEL</string>
+    <string name="confirm_icon_text">확</string>
+    <string name="dialog_confirm_title">Confirmation</string>
+    <string name="dialog_confirm_message">Are you sure?</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_confirm">Confirm</string>
 </resources>

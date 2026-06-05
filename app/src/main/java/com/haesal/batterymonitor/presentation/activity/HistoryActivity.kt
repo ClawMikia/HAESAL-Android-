@@ -2,7 +2,6 @@ package com.haesal.batterymonitor.presentation.activity
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +9,7 @@ import com.haesal.batterymonitor.R
 import com.haesal.batterymonitor.databinding.ActivityHistoryBinding
 import com.haesal.batterymonitor.presentation.adapter.BatteryHistoryAdapter
 import com.haesal.batterymonitor.presentation.viewmodel.BatteryViewModel
+import com.haesal.batterymonitor.util.DialogHelper
 import kotlinx.coroutines.launch
 
 class HistoryActivity : AppCompatActivity() {
@@ -66,14 +66,14 @@ class HistoryActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.btnClearHistory.setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle("Clear History")
-                .setMessage("Delete all battery history records?")
-                .setPositiveButton("Delete") { _, _ ->
+            DialogHelper.showConfirmDialog(
+                context = this,
+                title = "Clear History",
+                message = "Delete all battery history records?",
+                onPositive = { 
                     viewModel.clearHistory()
                 }
-                .setNegativeButton("Cancel", null)
-                .show()
+            )
         }
     }
 
