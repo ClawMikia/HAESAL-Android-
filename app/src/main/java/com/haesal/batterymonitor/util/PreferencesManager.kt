@@ -28,11 +28,14 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean(KEY_WAS_CHARGING, false)
         set(value) = prefs.edit().putBoolean(KEY_WAS_CHARGING, value).apply()
 
+    val sharedPreferences: SharedPreferences
+        get() = prefs
+
     companion object {
-        private const val KEY_SOLAR_MODE = "solar_mode"
-        private const val KEY_BATTERY_HISTORY = "battery_history"
-        private const val KEY_NOTIFICATIONS = "notifications"
-        private const val KEY_LAST_BATTERY_LEVEL = "last_battery_level"
-        private const val KEY_WAS_CHARGING = "was_charging"
+        const val KEY_SOLAR_MODE = "solar_mode"
+        const val KEY_BATTERY_HISTORY = "battery_history"
+        const val KEY_NOTIFICATIONS = "notifications"
+        const val KEY_LAST_BATTERY_LEVEL = "last_battery_level"
+        const val KEY_WAS_CHARGING = "was_charging"
     }
 }

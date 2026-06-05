@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.os.BatteryManager
 import android.os.Build
 import android.hardware.Sensor
@@ -20,6 +21,7 @@ import com.haesal.batterymonitor.data.model.ChargingSource
 import com.haesal.batterymonitor.data.repository.BatteryInsights
 import com.haesal.batterymonitor.util.BatteryInfoFormatter
 import com.haesal.batterymonitor.util.BatteryReceiver
+import com.haesal.batterymonitor.util.PreferencesManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -75,7 +77,24 @@ class BatteryViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
+    private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        when (key) {
+            PreferencesManager.KEY_SOLAR_MODE -> {
+                _isSolarMode.value = prefs.isSolarModeEnabled
+                _batteryStatus.value = _batteryStatus.value.copy(isSolarMode = prefs.isSolarModeEnabled)
+                refreshBatteryStatus()
+            }
+            PreferencesManager.KEY_BATTERY_HISTORY -> {
+                _isBatteryHistoryEnabled.value = prefs.isBatteryHistoryEnabled
+            }
+            PreferencesManager.KEY_NOTIFICATIONS -> {
+                _isNotificationsEnabled.value = prefs.isNotificationsEnabled
+            }
+        }
+    }
+
     init {
+        prefs.sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
         loadCurrentBatteryStatus()
         observeHistory()
         registerBatteryReceiver()
@@ -165,6 +184,7 @@ class BatteryViewModel(application: Application) : AndroidViewModel(application)
         viewModelScope.launch {
             repository.getAllHistory().collect { list ->
                 _historyList.value = list
+                loadInsights() // Auto-refresh insights whenever history changes
             }
         }
     }
@@ -204,6 +224,7 @@ class BatteryViewModel(application: Application) : AndroidViewModel(application)
     override fun onCleared() {
         super.onCleared()
         try {
+            prefs.sharedPreferences.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
             sensorManager.unregisterListener(this)
             getApplication<Application>().unregisterReceiver(batteryUpdateReceiver)
         } catch (e: Exception) {

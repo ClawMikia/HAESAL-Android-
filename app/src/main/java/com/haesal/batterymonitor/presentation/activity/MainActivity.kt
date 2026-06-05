@@ -44,22 +44,6 @@ class MainActivity : AppCompatActivity() {
 
         batteryReceiver = BatteryReceiver()
         registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-        
-        // Register receiver for solar mode changes
-        solarModeReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                if (intent.action == "com.haesal.batterymonitor.SOLAR_MODE_CHANGED") {
-                    viewModel.refreshBatteryStatus()
-                }
-            }
-        }
-        
-        // Fix for newer Android versions - specify RECEIVER_EXPORTED
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            registerReceiver(solarModeReceiver, IntentFilter("com.haesal.batterymonitor.SOLAR_MODE_CHANGED"), Context.RECEIVER_EXPORTED)
-        } else {
-            registerReceiver(solarModeReceiver, IntentFilter("com.haesal.batterymonitor.SOLAR_MODE_CHANGED"))
-        }
     }
 
     private fun requestNotificationPermission() {
@@ -168,11 +152,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private var solarModeReceiver: android.content.BroadcastReceiver? = null
-    
     override fun onDestroy() {
         super.onDestroy()
         try { unregisterReceiver(batteryReceiver) } catch (e: Exception) { /* ignore */ }
-        try { solarModeReceiver?.let { unregisterReceiver(it) } } catch (e: Exception) { /* ignore */ }
     }
 }

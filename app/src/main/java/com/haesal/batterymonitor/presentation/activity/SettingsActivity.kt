@@ -49,8 +49,6 @@ class SettingsActivity : AppCompatActivity() {
     private fun setupListeners() {
         binding.switchSolarMode.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setSolarMode(isChecked)
-            // Send broadcast to MainActivity to refresh UI
-            sendBroadcast(Intent("com.haesal.batterymonitor.SOLAR_MODE_CHANGED").putExtra("solar_mode", isChecked))
         }
         binding.switchBatteryHistory.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setBatteryHistoryEnabled(isChecked)
